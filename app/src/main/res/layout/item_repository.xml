@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+    <variable
+        name="viewModel"
+        type="com.tcorredo.android.java.mvvm.ui.repository.RepositoryItemViewModel"
+        />
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/_5sdp"
+      android:layout_marginStart="@dimen/_5sdp"
+      app:cardUseCompatPadding="true"
+      >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp"
+        >
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/firstLayout"
+          android:layout_width="@dimen/_210sdp"
+          android:layout_height="wrap_content"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          >
+
+        <TextView
+            android:id="@+id/repositoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="@{viewModel.title}"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Android MVVM Architecture"
+            />
+
+        <TextView
+            android:id="@+id/repositoryDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="@dimen/_5sdp"
+            android:text="@{viewModel.content}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repositoryTitle"
+            tools:text="This repository contains a detailed sample app that implements MVP architecture using Dagger2, GreenDao, RxJava2, FastAndroidNetworking and PlaceholderView"
+            />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <ImageView
+          android:id="@+id/userProfileImage"
+          android:layout_width="@dimen/_50sdp"
+          android:layout_height="@dimen/_50sdp"
+          android:importantForAccessibility="no"
+          android:scaleType="fitCenter"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/firstLayout"
+          app:layout_constraintTop_toTopOf="parent"
+          app:imageUrl="@{viewModel.imageUrl}"
+          tools:src="@drawable/ic_account_circle_black_24dp"
+          />
+
+      <TextView
+          android:id="@+id/repositoryUserName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{viewModel.userName}"
+          android:textColor="@android:color/holo_blue_dark"
+          android:textSize="@dimen/_13sdp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/firstLayout"
+          app:layout_constraintTop_toBottomOf="@+id/userProfileImage"
+          tools:text="username"
+          />
+
+      <ImageView
+          android:id="@+id/forkImage"
+          android:layout_width="@dimen/_20sdp"
+          android:layout_height="@dimen/_20sdp"
+          android:importantForAccessibility="no"
+          android:scaleType="fitCenter"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/firstLayout"
+          app:srcCompat="@drawable/ic_fork_orange_24dp"
+          />
+
+      <TextView
+          android:id="@+id/repositoryForkNumber"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{viewModel.forkNumber}"
+          android:textColor="#FFC107"
+          android:textSize="@dimen/_15sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/forkImage"
+          app:layout_constraintTop_toBottomOf="@+id/firstLayout"
+          tools:text="123"
+          />
+
+      <ImageView
+          android:id="@+id/starImage"
+          android:layout_width="@dimen/_20sdp"
+          android:layout_height="@dimen/_20sdp"
+          android:layout_marginStart="@dimen/_10sdp"
+          android:importantForAccessibility="no"
+          android:scaleType="fitCenter"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/repositoryForkNumber"
+          app:layout_constraintTop_toBottomOf="@+id/firstLayout"
+          app:srcCompat="@drawable/ic_star_orange_24dp"
+          />
+
+      <TextView
+          android:id="@+id/repositoryStarNumber"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{viewModel.starNumber}"
+          android:textColor="#FFC107"
+          android:textSize="@dimen/_15sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/starImage"
+          app:layout_constraintTop_toBottomOf="@+id/firstLayout"
+          tools:text="123"
+          />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </com.google.android.material.card.MaterialCardView>
+
+</layout>
