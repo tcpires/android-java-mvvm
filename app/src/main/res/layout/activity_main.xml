@@ -10,52 +10,41 @@
         />
   </data>
 
-  <androidx.drawerlayout.widget.DrawerLayout
-      android:id="@+id/drawerView"
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+      android:id="@+id/clRootView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:fitsSystemWindows="true"
       >
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/clRootView"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
 
-      <com.google.android.material.appbar.AppBarLayout
+      <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          >
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            />
-
-      </com.google.android.material.appbar.AppBarLayout>
-
-      <FrameLayout
-          android:id="@+id/fragment_container"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:fitsSystemWindows="true"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          android:layout_height="?android:attr/actionBarSize"
+          android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+          app:layout_collapseMode="pin"
+          app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
           />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_drawer"
-        style="@style/Widget.Design.NavigationView"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-  </androidx.drawerlayout.widget.DrawerLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_menu"
+        />
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

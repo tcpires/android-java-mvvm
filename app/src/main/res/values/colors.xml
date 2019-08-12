@@ -5,4 +5,7 @@
   <color name="primaryDarkColor">#878787</color>
   <color name="primaryTextColor">#ffffff</color>
   <color name="button_color">#F1F9C9</color>
+  <color name="stateBgColor">#F0F0F0</color>
+  <color name="profileTitleDarkColor">#616161</color>
+  <color name="profileTitlesLightColor">#FF9E9E9E</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.tcorredo.android.java.mvvm.data.model;
+package com.tcorredo.android.java.mvvm.data.local.db.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -38,6 +38,8 @@ public class Owner implements Parcelable {
   @Json(name = "received_events_url") private String receivedEventsUrl;
   @Json(name = "type") private String type;
   @Json(name = "site_admin") private Boolean siteAdmin;
+  @Json(name = "public_repos") private Integer publicRepos;
+  @Json(name = "public_gists") private Integer publicGists;
 
   public Owner() {
   }
@@ -45,7 +47,8 @@ public class Owner implements Parcelable {
   public Owner(String login, Long id, String nodeId, String avatarUrl, String gravatarId,
       String url, String htmlUrl, String followersUrl, String followingUrl, String gistsUrl,
       String starredUrl, String subscriptionsUrl, String organizationsUrl, String reposUrl,
-      String eventsUrl, String receivedEventsUrl, String type, Boolean siteAdmin) {
+      String eventsUrl, String receivedEventsUrl, String type, Boolean siteAdmin,
+      Integer publicRepos, Integer publicGists) {
     this.login = login;
     this.id = id;
     this.nodeId = nodeId;
@@ -64,6 +67,8 @@ public class Owner implements Parcelable {
     this.receivedEventsUrl = receivedEventsUrl;
     this.type = type;
     this.siteAdmin = siteAdmin;
+    this.publicRepos = publicRepos;
+    this.publicGists = publicGists;
   }
 
   protected Owner(Parcel in) {
@@ -85,6 +90,8 @@ public class Owner implements Parcelable {
     this.receivedEventsUrl = in.readString();
     this.type = in.readString();
     this.siteAdmin = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    this.publicRepos = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.publicGists = (Integer) in.readValue(Integer.class.getClassLoader());
   }
 
   public String getLogin() {
@@ -231,6 +238,22 @@ public class Owner implements Parcelable {
     this.siteAdmin = siteAdmin;
   }
 
+  public Integer getPublicRepos() {
+    return publicRepos;
+  }
+
+  public void setPublicRepos(Integer publicRepos) {
+    this.publicRepos = publicRepos;
+  }
+
+  public Integer getPublicGists() {
+    return publicGists;
+  }
+
+  public void setPublicGists(Integer publicGists) {
+    this.publicGists = publicGists;
+  }
+
   @Override public String toString() {
     return "Owner{" +
         "login='" + login + '\'' +
@@ -273,6 +296,8 @@ public class Owner implements Parcelable {
     dest.writeString(this.receivedEventsUrl);
     dest.writeString(this.type);
     dest.writeValue(this.siteAdmin);
+    dest.writeValue(this.publicRepos);
+    dest.writeValue(this.publicGists);
   }
 
   @Override public int describeContents() {

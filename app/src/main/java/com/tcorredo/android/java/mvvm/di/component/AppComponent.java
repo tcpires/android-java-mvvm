@@ -1,6 +1,5 @@
 package com.tcorredo.android.java.mvvm.di.component;
 
-import android.app.Application;
 import com.tcorredo.android.java.mvvm.MyAppAplication;
 import com.tcorredo.android.java.mvvm.di.module.ActivityModule;
 import com.tcorredo.android.java.mvvm.di.module.AppModule;
@@ -24,7 +23,7 @@ public interface AppComponent {
   interface Builder {
 
     @BindsInstance
-    Builder application(Application application);
+    Builder application(MyAppAplication application);
 
     AppComponent build();
   }

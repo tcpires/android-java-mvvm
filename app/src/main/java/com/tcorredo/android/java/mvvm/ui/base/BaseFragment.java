@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2019-05-28
  */
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends
-    Fragment {
+    Fragment implements BaseNavigator {
 
   @Inject
   public ViewModelFactory factory;
@@ -101,5 +101,17 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     if (mActivity != null) {
       mActivity.hideKeyboard();
     }
+  }
+
+  @Override public void onSuccess() {
+    getBaseActivity().onSuccess();
+  }
+
+  @Override public void handleError(Throwable throwable) {
+    getBaseActivity().handleError(throwable);
+  }
+
+  @Override public void showMessage(String title, String content, int buttonName) {
+    getBaseActivity().showMessage(title, content, buttonName);
   }
 }

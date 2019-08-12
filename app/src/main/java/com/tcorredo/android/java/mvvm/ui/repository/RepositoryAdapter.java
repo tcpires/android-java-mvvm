@@ -4,18 +4,21 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.tcorredo.android.java.mvvm.data.model.Repository;
+import com.tcorredo.android.java.mvvm.data.local.db.model.Repository;
 import com.tcorredo.android.java.mvvm.databinding.ItemRepositoryBinding;
 import com.tcorredo.android.java.mvvm.ui.base.BaseViewHolder;
+import com.tcorredo.android.java.mvvm.ui.base.BindableAdapter;
 import java.util.List;
 
 /**
  * @author Thiago Corredo
  * @since 2019-05-28
  */
-public class RepositoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class RepositoryAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
+    BindableAdapter<Repository> {
 
   private List<Repository> repositoryList;
+  private RepositoryItemViewModel.RepositoryItemViewModelListener listener;
 
   public RepositoryAdapter() {
   }
@@ -26,10 +29,10 @@ public class RepositoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
   @NonNull @Override
   public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    ItemRepositoryBinding blogViewBinding =
+    ItemRepositoryBinding itemRepositoryBinding =
         ItemRepositoryBinding.inflate(LayoutInflater.from(parent.getContext()),
             parent, false);
-    return new RepositoryViewHolder(blogViewBinding);
+    return new RepositoryViewHolder(itemRepositoryBinding);
   }
 
   @Override public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
@@ -40,14 +43,24 @@ public class RepositoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     return repositoryList.size();
   }
 
-  public void addItems(List<Repository> blogList) {
-    repositoryList.addAll(blogList);
+  public void add(List<Repository> repositories) {
+    repositoryList.addAll(repositories);
     notifyDataSetChanged();
   }
 
   public void clearItems() {
     repositoryList.clear();
     notifyDataSetChanged();
+  }
+
+  @Override public void setItems(List<Repository> repositories) {
+    repositoryList.addAll(repositories);
+    notifyDataSetChanged();
+  }
+
+  public void setListener(
+      RepositoryItemViewModel.RepositoryItemViewModelListener listener) {
+    this.listener = listener;
   }
 
   public class RepositoryViewHolder extends BaseViewHolder {
@@ -63,7 +76,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override public void onBind(int position) {
       Repository repository = repositoryList.get(position);
-      itemViewModel = new RepositoryItemViewModel(repository);
+      itemViewModel = new RepositoryItemViewModel(repository, listener);
       repositoryBinding.setViewModel(itemViewModel);
       repositoryBinding.executePendingBindings();
     }

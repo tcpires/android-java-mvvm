@@ -1,5 +1,6 @@
 package com.tcorredo.android.java.mvvm.ui.repository;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,13 +12,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.tcorredo.android.java.mvvm.BR;
 import com.tcorredo.android.java.mvvm.R;
-import com.tcorredo.android.java.mvvm.data.model.Repository;
+import com.tcorredo.android.java.mvvm.data.local.db.model.Repository;
+import com.tcorredo.android.java.mvvm.data.remote.response.paging.GithubPaging;
 import com.tcorredo.android.java.mvvm.databinding.FragmentRepositoryBinding;
 import com.tcorredo.android.java.mvvm.ui.base.BaseFragment;
+import com.tcorredo.android.java.mvvm.ui.pull_request.PullRequestActivity;
 import java.util.Collections;
-import java.util.List;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2019-05-28
  */
 public class RepositoryFragment extends BaseFragment<FragmentRepositoryBinding, RepositoryViewModel>
-    implements RepositoryNavigator {
+    implements RepositoryNavigator, RepositoryItemViewModel.RepositoryItemViewModelListener {
 
   private FragmentRepositoryBinding fragmentRepositoryBinding;
   private RepositoryViewModel repositoryViewModel;
@@ -35,6 +38,8 @@ public class RepositoryFragment extends BaseFragment<FragmentRepositoryBinding, 
   RepositoryAdapter adapter;
 
   private String query;
+  private GithubPaging githubPaging;
+  private boolean allowLoadMore = true;
 
   public static RepositoryFragment newInstance() {
     Bundle args = new Bundle();
@@ -70,8 +75,12 @@ public class RepositoryFragment extends BaseFragment<FragmentRepositoryBinding, 
     // handle error
   }
 
-  @Override public void updateRepository(List<Repository> repositories) {
-    adapter.addItems(repositories);
+  @Override public void setGithubPaging(GithubPaging githubPaging) {
+    this.githubPaging = githubPaging;
+  }
+
+  @Override public void setAllowLoadMore(boolean allowLoadMore) {
+    this.allowLoadMore = allowLoadMore;
   }
 
   @Override public void onCreateOptionsMenu(@NotNull Menu menu, @NotNull MenuInflater inflater) {
@@ -86,6 +95,7 @@ public class RepositoryFragment extends BaseFragment<FragmentRepositoryBinding, 
       @Override
       public boolean onQueryTextSubmit(String query) {
         setQuery(query);
+        adapter.clearItems();
         repositoryViewModel.getRepositories(query, "stars", 1);
         return false;
       }
@@ -106,11 +116,13 @@ public class RepositoryFragment extends BaseFragment<FragmentRepositoryBinding, 
         Collections.sort(repositoryViewModel.getRepositoryListLiveData().getValue(),
             Repository.getNameComparator());
         adapter.clearItems();
-        adapter.addItems(repositoryViewModel.getRepositoryListLiveData().getValue());
+        adapter.add(repositoryViewModel.getRepositoryListLiveData().getValue());
         break;
       case R.id.action_order_by_stars:
+        Collections.sort(repositoryViewModel.getRepositoryListLiveData().getValue(),
+            Repository.getStarComparator());
         adapter.clearItems();
-        repositoryViewModel.getRepositories("language:Java", "stars", 1);
+        adapter.add(repositoryViewModel.getRepositoryListLiveData().getValue());
         break;
     }
     return super.onOptionsItemSelected(item);
@@ -127,16 +139,40 @@ public class RepositoryFragment extends BaseFragment<FragmentRepositoryBinding, 
     super.onViewCreated(view, savedInstanceState);
     fragmentRepositoryBinding = getViewDataBinding();
 
-    fragmentRepositoryBinding.repositoryRecyclerView.setLayoutManager(
-        new LinearLayoutManager(getContext()));
+    adapter.setListener(this);
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    fragmentRepositoryBinding.repositoryRecyclerView.setLayoutManager(layoutManager);
     fragmentRepositoryBinding.repositoryRecyclerView.setItemAnimator(new DefaultItemAnimator());
     fragmentRepositoryBinding.repositoryRecyclerView.setAdapter(adapter);
+
+    fragmentRepositoryBinding.repositoryRecyclerView.addOnScrollListener(
+        new RecyclerView.OnScrollListener() {
+          @Override
+          public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+
+            if (layoutManager.getItemCount() - 2 <=
+                layoutManager.getChildCount() + layoutManager.findFirstVisibleItemPosition()) {
+              if (githubPaging.hasMore() && allowLoadMore) {
+                allowLoadMore = false;
+                repositoryViewModel.getRepositories("language:Java", "stars",
+                    githubPaging.nextPage());
+              }
+            }
+          }
+        });
 
     fragmentRepositoryBinding.refreshList.setOnRefreshListener(
         () -> {
           adapter.clearItems();
           repositoryViewModel.refreshRepositoriesList();
         });
+  }
+
+  @Override public void onItemClick(Repository repository) {
+    Intent intent = PullRequestActivity.getIntent(getContext(), repository.getName(),
+        repository.getOwner().getLogin());
+    startActivity(intent);
   }
 
   public void setQuery(String query) {

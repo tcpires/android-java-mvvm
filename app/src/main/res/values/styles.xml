@@ -9,8 +9,6 @@
     <item name="shapeAppearanceSmallComponent">@style/AppShapeAppearance.SmallComponent</item>
     <item name="shapeAppearanceMediumComponent">@style/AppShapeAppearance.MediumComponent</item>
     <item name="shapeAppearanceLargeComponent">@style/AppShapeAppearance.LargeComponent</item>
-    <item name="bottomAppBarStyle">@style/AppBottomAppBar</item>
-    <item name="materialButtonStyle">@style/AppButton</item>
     <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
   </style>
@@ -28,10 +26,6 @@
   <style name="AppShapeAppearance.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
     <item name="cornerFamily">cut</item>
     <item name="cornerSize">@dimen/_5sdp</item>
-  </style>
-
-  <style name="AppBottomAppBar" parent="Widget.MaterialComponents.BottomAppBar.Colored">
-    <item name="backgroundTint">@color/primaryColor</item>
   </style>
 
   <!--  For the sake of xml preview not breaking  -->

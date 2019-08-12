@@ -1,13 +1,12 @@
 package com.tcorredo.android.java.mvvm.utils;
 
 import android.content.Context;
-import androidx.databinding.BindingAdapter;
 import android.widget.ImageView;
+import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.tcorredo.android.java.mvvm.data.model.Repository;
-import com.tcorredo.android.java.mvvm.ui.repository.RepositoryAdapter;
+import com.tcorredo.android.java.mvvm.ui.base.BindableAdapter;
 import java.util.List;
 
 /**
@@ -20,11 +19,10 @@ public class BindingUtils {
   }
 
   @BindingAdapter({ "adapter" })
-  public static void addRepositoryItems(RecyclerView recyclerView, List<Repository> repositories) {
-    RepositoryAdapter adapter = (RepositoryAdapter) recyclerView.getAdapter();
+  public static <T> void addRepositoryItems(RecyclerView recyclerView, List<T> items) {
+    BindableAdapter adapter = (BindableAdapter) recyclerView.getAdapter();
     if (adapter != null) {
-      adapter.clearItems();
-      adapter.addItems(repositories);
+      adapter.setItems(items);
     }
   }
 

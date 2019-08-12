@@ -2,7 +2,9 @@ package com.tcorredo.android.java.mvvm;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import androidx.fragment.app.Fragment;
+import androidx.multidex.MultiDex;
 import com.tcorredo.android.java.mvvm.di.component.DaggerAppComponent;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -31,6 +33,13 @@ public class MyAppAplication extends Application implements HasActivityInjector,
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
     return fragmentDispatchingAndroidInjector;
   }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
+  }
+
 
   @Override
   public void onCreate() {

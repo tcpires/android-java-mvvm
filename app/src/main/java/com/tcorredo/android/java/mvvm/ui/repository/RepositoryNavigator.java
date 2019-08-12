@@ -1,17 +1,15 @@
 package com.tcorredo.android.java.mvvm.ui.repository;
 
-import com.tcorredo.android.java.mvvm.data.model.Repository;
-import java.util.List;
+import com.tcorredo.android.java.mvvm.data.remote.response.paging.GithubPaging;
+import com.tcorredo.android.java.mvvm.ui.base.BaseNavigator;
 
 /**
  * @author Thiago Corredo
  * @since 2019-05-28
  */
-public interface RepositoryNavigator {
+public interface RepositoryNavigator extends BaseNavigator {
 
-  void onSuccess();
+  void setGithubPaging(GithubPaging pageArrayList);
 
-  void handleError(Throwable throwable);
-
-  void updateRepository(List<Repository> repositories);
+  void setAllowLoadMore(boolean allowLoadMore);
 }

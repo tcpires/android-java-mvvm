@@ -25,10 +25,18 @@
   <string name="delete">Excluir</string>
   <string name="next">Próximo</string>
   <string name="back">Voltar</string>
+  <string name="no_description">Sem descrição</string>
 
   <!-- RepositorieFragment Menu -->
   <string name="search">Pesquisar</string>
   <string name="nav_repositories">Repositórios</string>
   <string name="order_by_name">Ordernar por Nome</string>
   <string name="order_by_stars">Ordernar por Estrelas</string>
+
+  <!-- PullRequestActivity -->
+  <string name="pull_request_opened">%d abertos</string>
+  <string name="pull_request_closed">&#160;/&#160;%d fechados</string>
+
+  <!-- GistFragment -->
+  <string name="gist_created">Criado %s</string>
 </resources>

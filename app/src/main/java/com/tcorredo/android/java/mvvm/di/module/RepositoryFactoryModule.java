@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class RepositoryFactoryModule {
 
   @Provides
-  RepositoryAdapter provideBlogAdapter() {
+  RepositoryAdapter provideRepositoryAdapter() {
     return new RepositoryAdapter(new ArrayList<>());
   }
 }

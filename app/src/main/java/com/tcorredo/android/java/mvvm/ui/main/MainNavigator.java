@@ -5,6 +5,4 @@ package com.tcorredo.android.java.mvvm.ui.main;
  * @since 2019-05-28
  */
 public interface MainNavigator {
-
-  void handleError(Throwable throwable);
 }

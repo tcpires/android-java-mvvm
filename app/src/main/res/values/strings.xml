@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name" translatable="false">TOPi - Mobile Developer Test</string>
+  <string name="app_name" translatable="false">Github API</string>
 
   <!-- Generic strings -->
   <string name="ok">OK</string>
@@ -25,6 +25,7 @@
   <string name="delete">Delete</string>
   <string name="next">Next</string>
   <string name="back">Back</string>
+  <string name="no_description">No description</string>
 
   <!--Drawer-->
   <string name="open_drawer" translatable="false">Drawer Open</string>
@@ -35,4 +36,11 @@
   <string name="nav_repositories">Repositories</string>
   <string name="order_by_name">Order by Name</string>
   <string name="order_by_stars">Order by Stars</string>
+
+  <!-- PullRequestActivity -->
+  <string name="pull_request_opened">%d opened</string>
+  <string name="pull_request_closed">&#160;/&#160;%d closed</string>
+
+  <!-- GistFragment -->
+  <string name="gist_created">Created %s</string>
 </resources>

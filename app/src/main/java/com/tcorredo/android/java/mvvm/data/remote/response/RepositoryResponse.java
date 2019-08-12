@@ -3,7 +3,7 @@ package com.tcorredo.android.java.mvvm.data.remote.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.squareup.moshi.Json;
-import com.tcorredo.android.java.mvvm.data.model.Repository;
+import com.tcorredo.android.java.mvvm.data.local.db.model.Repository;
 import java.util.List;
 
 /**
